@@ -1,20 +1,20 @@
 import React from 'react';
-import { StyleSheet} from 'react-native';
-import SignIn from './src/components/SignIn'
+import  HomeScreen  from './src/screens/HomeScreen'; 
+import  RegisterScreen  from './src/screens/RegisterScreen'; 
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-export default function App() {
+const Stack = createStackNavigator();
 
+function App() {
   return (
-    <>
-      <SignIn/>
-    </>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
