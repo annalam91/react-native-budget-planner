@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import { Button, StyleSheet, TextInput, Text, TouchableOpacity, View } from 'react-native';
-import firebase from '../../firebase';
+import firebase from 'firebase';
 
-const RegisterScreen = ({ navigation }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+function LoginScreen({navigation}) {
+
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
     const [error, setError] = useState('');
 
-    const signUp = async () => {
+    const login = async () => {
         try {
-            const response = await firebase.auth().createUserWithEmailAndPassword(email, password);
+            const response = await firebase.auth().signInWithEmailAndPassword(email, password);
             navigation.navigate('Home');
         } catch (err) {
             setError(err.message);
@@ -17,7 +18,7 @@ const RegisterScreen = ({ navigation }) => {
     }
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>Register</Text>
+            <Text style={styles.header}>Login</Text>
             <TextInput style={styles.input}
                 placeholder="Email address"
                 onChangeText={setEmail}
@@ -32,15 +33,14 @@ const RegisterScreen = ({ navigation }) => {
                 <Text style={{ color: 'red' }}>{error}</Text>
                 : null
         }
-            <Button title="Register"
-                onPress={() => signUp()}/>
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                <Text style={styles.signInLink}>Already have an account? Sign In</Text>
+            <Button title="Login"
+                onPress={() => login()}/>
+            <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+                <Text style={styles.signInLink}>Don't have an account? Register here</Text>
             </TouchableOpacity>
         </View>
     );
 }
-
 
 const styles = StyleSheet.create({
     container: {
@@ -66,4 +66,6 @@ const styles = StyleSheet.create({
     }
  })
 
-export default RegisterScreen;
+
+export default LoginScreen;
+
