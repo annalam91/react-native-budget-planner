@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Button, StyleSheet, TextInput, Text, TouchableOpacity, View } from 'react-native';
+import { Button, StyleSheet, TextInput, Text, TouchableOpacity, SafeAreaView } from 'react-native';
 import firebase from 'firebase';
 
 function LoginScreen({navigation}) {
@@ -17,7 +17,7 @@ function LoginScreen({navigation}) {
         }
     }
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <Text style={styles.header}>Login</Text>
             <TextInput style={styles.input}
                 placeholder="Email address"
@@ -38,7 +38,7 @@ function LoginScreen({navigation}) {
             <TouchableOpacity onPress={() => navigation.navigate('Register')}>
                 <Text style={styles.signInLink}>Don't have an account? Register here</Text>
             </TouchableOpacity>
-        </View>
+        </SafeAreaView>
     );
 }
 

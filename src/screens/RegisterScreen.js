@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, StyleSheet, TextInput, Text, TouchableOpacity, View } from 'react-native';
+import { Button, StyleSheet, TextInput, Text, TouchableOpacity, SafeAreaView } from 'react-native';
 import firebase from '../../firebase';
 
 const RegisterScreen = ({ navigation }) => {
@@ -16,7 +16,7 @@ const RegisterScreen = ({ navigation }) => {
         }
     }
     return (
-        <View style={styles.container}>
+        <SafeAreaView  style={styles.container}>
             <Text style={styles.header}>Register</Text>
             <TextInput style={styles.input}
                 placeholder="Email address"
@@ -37,7 +37,7 @@ const RegisterScreen = ({ navigation }) => {
             <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.signInLink}>Already have an account? Sign In</Text>
             </TouchableOpacity>
-        </View>
+        </SafeAreaView >
     );
 }
 
