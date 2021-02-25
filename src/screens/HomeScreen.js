@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,24 +6,44 @@ import {
   TextInput,
   SafeAreaView,
 } from 'react-native';
+import firebase from '../../firebase';
 
 function HomeScreen({ navigation }) {
 
   const [item, setItem] = useState('');
   const [cost, setCost] = useState(0);
+  const [testingStoringData, setTestingStoringData] = useState([]);
+
+  const dbc = firebase.firestore().collection('single-transaction');
 
   const addItem = () => {
-    console.log('Boop!');
+    dbc.add({
+      budgetType: item,
+      cost: cost
+    })
+    setItem('');
+    setCost(0);
   }
+
+  useEffect(() => {
+    const subscriber = dbc.onSnapshot((querySnapshot) => {
+      const items = [];
+      querySnapshot.forEach((doc) => {
+        items.push(doc.data());
+      });
+      setTestingStoringData(items);
+    });
+    return () => subscriber();
+  }, []);
 
   return (
     <SafeAreaView style={styles.addItem}>
       <TextInput style={styles.input}
-        placeholder="Bills"
+        placeholder={"Bills"}
         onChangeText={setItem}
         value={item}/>
       <TextInput style={styles.input}
-        placeholder="£0"
+        placeholder={"£0"}
         onChangeText={setCost}
         value={cost}/>
       <Button title="Add item"
