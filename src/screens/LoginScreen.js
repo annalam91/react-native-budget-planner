@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import { Button, StyleSheet, TextInput, Text, TouchableOpacity, SafeAreaView } from 'react-native';
-import firebase from '../../firebase';
-
+import {auth} from '../../firebase';
 
 function LoginScreen({navigation}) {
 
@@ -11,7 +10,7 @@ function LoginScreen({navigation}) {
 
     const login = async () => {
         try {
-            const response = await firebase.auth().signInWithEmailAndPassword(email, password);
+            await auth.signInWithEmailAndPassword(email, password);
             navigation.navigate('Home');
         } catch (err) {
             setError(err.message);
@@ -23,6 +22,7 @@ function LoginScreen({navigation}) {
             <TextInput style={styles.input}
                 placeholder="Email address"
                 onChangeText={setEmail}
+                keyboardType={"email-address"}
                 value={email}/>
             <TextInput style={styles.input}
                 secureTextEntry={true}
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     },
     header: {
         marginTop: -80,
-        fontWeight: 600,
+        fontWeight: "600",
         fontSize: 30
     },
     input: {

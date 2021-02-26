@@ -3,26 +3,19 @@ import {
     StyleSheet,
     FlatList,
     Text,
-    Button,
-    TextInput,
     SafeAreaView,
     View
 } from 'react-native';
-import firebase from '../../firebase';
+import { FAB } from 'react-native-paper';
+import dayjs from 'dayjs'
+import {db} from '../../firebase';
 
 function HomeScreen({navigation}) {
 
-    const [item, setItem] = useState('');
-    const [cost, setCost] = useState(0);
     const [storingBudgetData, setStoringBudgetData] = useState([]);
+    const [currentDate, setCurrentDate] = useState("");
 
-    const dbc = firebase.firestore().collection('single-transaction');
-
-    const addItem = () => {
-        dbc.add({budgetType: item, cost: cost})
-        setItem('');
-        setCost(0);
-    }
+    const dbc = db.collection('single-transaction');
 
     const displayItemsAdded = () => {
         dbc.onSnapshot((querySnapshot) => {
@@ -39,14 +32,21 @@ function HomeScreen({navigation}) {
         });
     }
 
+    const getDate = () => {
+      const today = dayjs().format('DD/MM/YYYY');
+      setCurrentDate(today)
+    }
+
     useEffect(() => {
+      getDate();
         displayItemsAdded();
     }, []);
 
     return (
         <SafeAreaView style={
-            styles.addItem
+            styles.container
         }>
+          <Text style={styles.today}>{currentDate}</Text>
             <View style={
                 styles.itemList
             }>
@@ -59,55 +59,35 @@ function HomeScreen({navigation}) {
                           <Text>{item.budgetType} £{item.cost}</Text>
                         )
                     }/>
-            </View>
-        <TextInput style={
-                styles.input
-            }
-            placeholder={"Bills"}
-            onChangeText={setItem}
-            value={item}/>
-        <TextInput style={
-                styles.input
-            }
-            placeholder={"£0"}
-            onChangeText={setCost}
-            value={cost}/>
-        <Button title="Add item"
-            onPress={
-                () => addItem()
-            }/>
+          </View>
+                    <FAB color='#017d1c' style={styles.addFab} small icon="plus" onPress={() => navigation.navigate('AddItem')} />
     </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
-    addItem: {
+    container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
     },
-    input: {
-        margin: 10,
-        height: 40,
-        borderColor: '#7a42f4',
-        borderWidth: 1,
-        width: 300
+    today:{
+      marginTop: 70,
+      fontSize: 26,
+      fontWeight: '700',
+      justifyContent: 'center',
+      color: '#000'
     },
-    addItemText: {
-        borderColor: '#7a42f4',
-        paddingHorizontal: 5,
-        paddingVertical: 7,
-        borderWidth: 1,
-        borderRadius: 5,
-        marginRight: 10,
-        minWidth: "50%",
-        textAlign: "center"
+    addFab: {
+      position: 'absolute',
+      margin: 25,
+      right: 0,
+      bottom: 0,
     },
     itemList: {
-      backgroundColor: '#f9c2ff',
-      padding: 5,
-      marginVertical: 3,
-      marginHorizontal: 16,
+      // backgroundColor: '#f9c2ff',
+      // padding: 5,
+      // marginVertical: 3,
+      // marginHorizontal: 16,
     }
 });
 

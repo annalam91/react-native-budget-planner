@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, StyleSheet, TextInput, Text, TouchableOpacity, SafeAreaView } from 'react-native';
-import firebase from '../../firebase';
+import {auth} from '../../firebase';
 
 const RegisterScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
@@ -9,7 +9,7 @@ const RegisterScreen = ({ navigation }) => {
 
     const signUp = async () => {
         try {
-            const response = await firebase.auth().createUserWithEmailAndPassword(email, password);
+            await auth.createUserWithEmailAndPassword(email, password);
             navigation.navigate('Home');
         } catch (err) {
             setError(err.message);
@@ -21,6 +21,7 @@ const RegisterScreen = ({ navigation }) => {
             <TextInput style={styles.input}
                 placeholder="Email address"
                 onChangeText={setEmail}
+                keyboardType={"email-address"}
                 value={email}/>
             <TextInput style={styles.input}
                 secureTextEntry={true}
@@ -32,9 +33,8 @@ const RegisterScreen = ({ navigation }) => {
                 <Text style={{ color: 'red' }}>{error}</Text>
                 : null
         }
-            <Button title="Register"
-                onPress={() => signUp()}/>
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <Button title="Register"/>
+            <TouchableOpacity onPress={() => navigation.navigate('AddItemScreen')}>
                 <Text style={styles.signInLink}>Already have an account? Sign In</Text>
             </TouchableOpacity>
         </SafeAreaView >
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     },
     header: {
         marginTop: -80,
-        fontWeight: 600,
+        fontWeight: "600",
         fontSize: 30
     },
     input: {
