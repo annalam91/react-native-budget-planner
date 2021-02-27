@@ -1,36 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {
-    StyleSheet,
-    FlatList,
-    Text,
-    SafeAreaView,
-    View
-} from 'react-native';
+import { StyleSheet, Text, SafeAreaView } from 'react-native';
 import { FAB } from 'react-native-paper';
 import dayjs from 'dayjs'
-import {db} from '../../firebase';
+import ListItem from '../components/ListItem';
+import FinanceChart from '../components/FinanceChart'
 
 function HomeScreen({navigation}) {
 
-    const [storingBudgetData, setStoringBudgetData] = useState([]);
     const [currentDate, setCurrentDate] = useState("");
-
-    const dbc = db.collection('single-transaction');
-
-    const displayItemsAdded = () => {
-        dbc.onSnapshot((querySnapshot) => {
-            const items = [];
-            querySnapshot.forEach((doc) => {
-                items.push({
-                    id: doc.id,
-                    ...doc.data()
-                });
-            });
-            setStoringBudgetData(items);
-        }, error => {
-            console.log(error)
-        });
-    }
 
     const getDate = () => {
       const today = dayjs().format('DD/MM/YYYY');
@@ -39,7 +16,6 @@ function HomeScreen({navigation}) {
 
     useEffect(() => {
       getDate();
-        displayItemsAdded();
     }, []);
 
     return (
@@ -47,20 +23,9 @@ function HomeScreen({navigation}) {
             styles.container
         }>
           <Text style={styles.today}>{currentDate}</Text>
-            <View style={
-                styles.itemList
-            }>
-                <FlatList keyExtractor={
-                        (item) => item.id
-                    }
-                    data={storingBudgetData}
-                    renderItem={
-                        ({item}) => (
-                          <Text>{item.budgetType} £{item.cost}</Text>
-                        )
-                    }/>
-          </View>
-                    <FAB color='#017d1c' style={styles.addFab} small icon="plus" onPress={() => navigation.navigate('AddItem')} />
+          <FinanceChart/>
+          <ListItem />
+          <FAB color='#017d1c' style={styles.addFab} small icon="plus" onPress={() => navigation.navigate('AddItem')} />
     </SafeAreaView>
     );
 };
@@ -83,12 +48,6 @@ const styles = StyleSheet.create({
       right: 0,
       bottom: 0,
     },
-    itemList: {
-      // backgroundColor: '#f9c2ff',
-      // padding: 5,
-      // marginVertical: 3,
-      // marginHorizontal: 16,
-    }
 });
 
 export default HomeScreen;

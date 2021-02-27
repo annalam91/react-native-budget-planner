@@ -34,7 +34,7 @@ const RegisterScreen = ({ navigation }) => {
                 : null
         }
             <Button title="Register"/>
-            <TouchableOpacity onPress={() => navigation.navigate('AddItemScreen')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.signInLink}>Already have an account? Sign In</Text>
             </TouchableOpacity>
         </SafeAreaView >

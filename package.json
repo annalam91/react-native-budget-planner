@@ -24,9 +24,12 @@
     "react-native-reanimated": "^1.13.2",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.15.2",
+    "react-native-svg": "^12.1.0",
     "react-native-web": "^0.13.18",
     "react-navigation": "^4.4.3",
-    "react-navigation-stack": "^2.10.2"
+    "react-navigation-stack": "^2.10.2",
+    "victory": "^35.4.9",
+    "victory-native": "^35.3.1"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"
