@@ -12,10 +12,12 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName={LoginScreen}>
+        {/* Remove this afterwards. Uncomment line 20*/}
+        <Stack.Screen name="AddItem" component={AddItemScreen} options={{headerShown: false}}/>
+        <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
         <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false}} />
         <Stack.Screen name="Register" component={RegisterScreen} options={{headerShown: false}}/>
-        <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
-        <Stack.Screen name="AddItem" component={AddItemScreen} options={{headerShown: false}}/>
+        {/* <Stack.Screen name="AddItem" component={AddItemScreen} options={{headerShown: false}}/> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -9,6 +9,8 @@ import {
     View
 } from 'react-native';
 import {db} from '../../firebase';
+import {FAB} from 'react-native-paper';
+import SingleAddInputItem from '../components/SingleAddInputItem';
 
 function AddItemScreen({navigation}) {
 
@@ -28,7 +30,7 @@ function AddItemScreen({navigation}) {
         <SafeAreaView style={
             styles.container
         }>
-        <TextInput style={
+             {/* <TextInput style={
                 styles.input
             }
             placeholder={"Bills"}
@@ -39,12 +41,13 @@ function AddItemScreen({navigation}) {
             }
             placeholder={"£0"}
             onChangeText={setCost}
-            value={cost}/>
-        <Button title="Add item"
-            onPress={
-                () => addItem()
-            }/>
-    </SafeAreaView>
+            value={cost}/> */}
+            <SingleAddInputItem/> 
+            <Button title="Add item"
+                onPress={
+                    () => addItem()
+                }/>
+        </SafeAreaView>
     );
 };
 
@@ -54,22 +57,23 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     input: {
-        // margin: 10,
-        // height: 40,
-        // borderColor: '#7a42f4',
-        // borderWidth: 1,
-        // width: 300
+        margin: 10,
+        height: 40,
+        borderColor: '#7a42f4',
+        borderWidth: 1,
+        width: 300
     },
     addItemText: {
-        // borderColor: '#7a42f4',
-        // paddingHorizontal: 5,
-        // paddingVertical: 7,
-        // borderWidth: 1,
-        // borderRadius: 5,
-        // marginRight: 10,
-        // minWidth: "50%",
-        // textAlign: "center"
-    },
+        borderColor: '#7a42f4',
+        paddingHorizontal: 5,
+        paddingVertical: 7,
+        borderWidth: 1,
+        borderRadius: 5,
+        marginRight: 10,
+        minWidth: "50%",
+        textAlign: "center"
+    }
 });
 
 export default AddItemScreen;
+
